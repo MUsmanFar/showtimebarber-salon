@@ -5,18 +5,17 @@ export function Footer() {
   return (
     <footer className="bg-[#030303] pt-20 pb-10 border-t border-white/5">
       <div className="container mx-auto px-4 md:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-16">
           {/* Brand */}
-          <div className="col-span-1 md:col-span-1">
-            <Link href="/" className="inline-block mb-6">
-              <span className="font-montserrat font-bold text-3xl tracking-tighter text-white">
-                SHOWTIME<span className="text-gold-500">.</span>
-              </span>
+          <div className="lg:col-span-1">
+            <Link href="/" className="font-montserrat font-black text-3xl tracking-tighter text-white uppercase mb-6 flex flex-col leading-none">
+              <span className="text-gold-500">SHOWTIME</span>
+              <span className="text-xs tracking-[0.2em] font-semibold text-zinc-400 mt-1">BARBER SALON</span>
             </Link>
-            <p className="text-zinc-400 text-sm leading-relaxed mb-6">
-              Precision, style, and confidence in every cut. Experience luxury grooming at its finest in Accokeek, MD.
+            <p className="text-zinc-400 leading-relaxed text-sm">
+              Experience the pinnacle of grooming. Where precision meets luxury, and every client is treated like a VIP.
             </p>
-            <div className="flex gap-4">
+            <div className="flex gap-4 mt-6">
               <a href="#" className="text-zinc-400 hover:text-gold-500 transition-colors font-semibold">
                 IG
               </a>

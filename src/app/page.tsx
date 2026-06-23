@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Navbar } from '@/components/layout/Navbar';
@@ -11,6 +11,73 @@ import { Button } from '@/components/ui/Button';
 import { Magnetic } from '@/components/ui/Magnetic';
 import { useBooking } from '@/components/BookingModal';
 import { Scissors, Shield, Star, Sparkles, Quote, ArrowRight, Clock, ChevronRight, CheckCircle2 } from 'lucide-react';
+
+// --- Continuous Particle System for Hero ---
+const AmbientParticles = () => {
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+      {[...Array(15)].map((_, i) => (
+        <motion.div
+          key={i}
+          className="absolute w-1 h-1 bg-gold-500 rounded-full blur-[1px]"
+          style={{
+            top: `${Math.random() * 100}%`,
+            left: `${Math.random() * 100}%`,
+          }}
+          animate={{
+            y: [0, -Math.random() * 50 - 50, 0],
+            x: [0, (Math.random() - 0.5) * 50, 0],
+            opacity: [0, Math.random() * 0.5 + 0.2, 0],
+          }}
+          transition={{
+            duration: Math.random() * 10 + 10,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: Math.random() * 5,
+          }}
+        />
+      ))}
+      <motion.div 
+        className="absolute top-1/4 left-1/4 w-[40vw] h-[40vw] border border-gold-500/10 rounded-full opacity-30 blur-sm"
+        animate={{ rotate: 360, scale: [1, 1.1, 1] }}
+        transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+      />
+    </div>
+  );
+};
+
+// --- Mouse Tracking Spotlight Wrapper for Why Choose Us ---
+const MouseSpotlightWrapper = ({ children }: { children: React.ReactNode }) => {
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    setMousePosition({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    });
+  };
+
+  return (
+    <div 
+      ref={containerRef}
+      onMouseMove={handleMouseMove}
+      className="relative z-10 w-full"
+    >
+      <div 
+        className="pointer-events-none absolute inset-0 z-0 transition-opacity duration-300 opacity-0 md:group-hover/spotlight:opacity-100"
+        style={{
+          background: `radial-gradient(600px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(212,175,55,0.08), transparent 40%)`
+        }}
+      />
+      <div className="group/spotlight relative z-10">
+        {children}
+      </div>
+    </div>
+  );
+};
 
 export default function Home() {
   const { openModal } = useBooking();
@@ -48,13 +115,14 @@ export default function Home() {
       <main className="flex-1 overflow-hidden">
         {/* 1. Split-Screen Cinematic Hero */}
         <section ref={heroRef} className="relative min-h-screen flex items-center pt-24 bg-transparent">
+          <AmbientParticles />
           <div className="container relative z-10 mx-auto px-4 md:px-8 flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-8 mt-10 lg:mt-0">
             {/* Left 60%: Text & CTA */}
-            <div className="w-full lg:w-[55%]">
-              <div className="mb-6">
+            <div className="w-full lg:w-[55%] relative">
+              <div className="mb-8">
                 <motion.h1 
                   initial={{ y: 50, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 1, ease: 'easeOut', delay: 0.2 }}
-                  className="font-montserrat text-5xl md:text-[4.5rem] lg:text-[5.5rem] font-extrabold text-white tracking-tighter leading-[1.05]"
+                  className="font-montserrat text-5xl md:text-[4rem] lg:text-[4.5rem] font-extrabold text-white tracking-tighter leading-[1.1]"
                 >
                   PRECISION.<br />
                   STYLE.<br />
@@ -71,7 +139,7 @@ export default function Home() {
               
               <motion.div
                 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.7 }}
-                className="flex flex-col sm:flex-row items-center gap-6"
+                className="flex flex-col sm:flex-row items-center gap-6 relative z-20"
               >
                 <Magnetic>
                   <Button onClick={openModal} size="lg" className="w-full sm:w-auto px-10 h-14 shadow-[0_0_30px_rgba(212,175,55,0.3)] hover:shadow-[0_0_50px_rgba(212,175,55,0.6)] transition-shadow">
@@ -93,16 +161,16 @@ export default function Home() {
               className="w-full lg:w-[45%] relative hidden md:block aspect-[4/5] lg:aspect-auto lg:h-[700px] mt-10 lg:mt-0"
             >
               {/* Main Image */}
-              <div className="absolute inset-0 rounded-3xl overflow-hidden border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] z-0">
+              <div className="absolute inset-0 rounded-3xl overflow-hidden border border-white/10 shadow-[0_30px_60px_rgba(0,0,0,0.6)] z-0">
                 <Image src="/hero.png" alt="Premium Barber Service" fill sizes="(max-width: 1024px) 100vw, 45vw" className="object-cover" priority />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-                <div className="absolute inset-0 bg-gold-500/5 mix-blend-overlay" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                <div className="absolute inset-0 bg-gold-500/10 mix-blend-overlay" />
               </div>
 
               {/* Floating Element 1: Rating Card */}
               <motion.div 
-                animate={{ y: [0, -15, 0] }} transition={{ repeat: Infinity, duration: 5, ease: "easeInOut" }}
-                className="absolute top-12 -left-12 z-10 glass px-6 py-4 rounded-2xl border border-gold-500/30 shadow-[0_10px_30px_rgba(0,0,0,0.5)] backdrop-blur-xl flex items-center gap-4"
+                animate={{ y: [0, -20, 0] }} transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
+                className="absolute top-12 -left-12 z-10 glass px-6 py-4 rounded-2xl border border-gold-500/30 shadow-[0_10px_40px_rgba(0,0,0,0.6)] backdrop-blur-xl flex items-center gap-4 hover:scale-105 transition-transform"
               >
                 <div className="w-12 h-12 bg-gold-500 rounded-full flex items-center justify-center text-black shadow-inner">
                   <Star fill="currentColor" size={24} />
@@ -115,8 +183,8 @@ export default function Home() {
 
               {/* Floating Element 2: Premium Grooming Badge */}
               <motion.div 
-                animate={{ y: [0, 15, 0] }} transition={{ repeat: Infinity, duration: 6, ease: "easeInOut", delay: 1 }}
-                className="absolute bottom-24 -right-8 z-10 glass px-6 py-4 rounded-2xl border border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.5)] backdrop-blur-xl"
+                animate={{ y: [0, 20, 0] }} transition={{ repeat: Infinity, duration: 7, ease: "easeInOut", delay: 1 }}
+                className="absolute bottom-24 -right-8 z-10 glass px-6 py-4 rounded-2xl border border-white/10 shadow-[0_10px_40px_rgba(0,0,0,0.6)] backdrop-blur-xl hover:scale-105 transition-transform"
               >
                 <div className="text-gold-500 text-xs font-bold uppercase tracking-widest mb-1">Experience</div>
                 <div className="text-xl font-extrabold font-montserrat text-white leading-none">Luxury Grooming</div>
@@ -124,8 +192,8 @@ export default function Home() {
 
               {/* Floating Element 3: Scissors Icon */}
               <motion.div 
-                animate={{ rotate: [0, 10, 0], y: [0, -10, 0] }} transition={{ repeat: Infinity, duration: 4, ease: "easeInOut", delay: 2 }}
-                className="absolute top-1/2 -right-6 z-10 w-16 h-16 rounded-full glass border border-gold-500/50 flex items-center justify-center shadow-[0_0_30px_rgba(212,175,55,0.2)]"
+                animate={{ rotate: [0, 15, 0], y: [0, -15, 0] }} transition={{ repeat: Infinity, duration: 5, ease: "easeInOut", delay: 2 }}
+                className="absolute top-1/2 -right-6 z-10 w-16 h-16 rounded-full glass border border-gold-500/50 flex items-center justify-center shadow-[0_0_40px_rgba(212,175,55,0.3)] hover:scale-110 transition-transform cursor-pointer"
               >
                 <Scissors className="text-gold-500" size={28} />
               </motion.div>
@@ -133,35 +201,41 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 2. Why Choose Showtime (Charcoal Grid Background) */}
+        {/* 2. Why Choose Showtime (Charcoal Grid Background + Spotlight) */}
         <section className="py-32 relative z-10 bg-[#0c0c0c] bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:40px_40px]">
-          <div className="container mx-auto px-4 max-w-7xl">
-            <div className="text-center mb-20">
-              <span className="text-gold-500 font-semibold tracking-widest uppercase text-sm mb-4 block">The Showtime Difference</span>
-              <h2 className="text-4xl md:text-5xl font-montserrat font-bold text-white tracking-tight">WHY CHOOSE <span className="text-gradient">US</span></h2>
+          <MouseSpotlightWrapper>
+            <div className="container mx-auto px-4 max-w-7xl relative z-10">
+              <div className="text-center mb-20">
+                <span className="text-gold-500 font-semibold tracking-widest uppercase text-sm mb-4 block">The Showtime Difference</span>
+                <h2 className="text-4xl md:text-5xl font-montserrat font-bold text-white tracking-tight">WHY CHOOSE <span className="text-gradient">US</span></h2>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {[
+                  { icon: Scissors, title: 'Master Craftsmanship', desc: 'Highly trained artists dedicated to perfecting every fade, line, and contour.' },
+                  { icon: Sparkles, title: 'Premium Products', desc: 'We strictly use luxury grooming products to protect your hair and skin health.' },
+                  { icon: Star, title: 'VIP Experience', desc: 'From the hot towel finish to the beverage, every visit feels like a VIP event.' },
+                  { icon: Shield, title: 'Attention to Detail', desc: 'No rushed cuts. We allocate proper time to ensure flawless, lasting results.' },
+                ].map((item, i) => (
+                  <motion.div key={i} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-50px" }} transition={{ duration: 0.5, delay: i * 0.1 }} className="glass p-8 rounded-2xl border border-white/5 bg-[#111]/80 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.5)] hover:border-gold-500/30 transition-all duration-300 group relative overflow-hidden">
+                    <div className="w-14 h-14 rounded-full bg-black/50 border border-white/5 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-gold-500/10 transition-transform">
+                      <item.icon className="text-gold-500" size={24} />
+                    </div>
+                    <h3 className="text-xl font-montserrat font-semibold text-white mb-3 relative z-10">{item.title}</h3>
+                    <p className="text-zinc-400 text-sm leading-relaxed relative z-10">{item.desc}</p>
+                    <div className="absolute inset-0 bg-gradient-to-br from-gold-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  </motion.div>
+                ))}
+              </div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {[
-                { icon: Scissors, title: 'Master Craftsmanship', desc: 'Highly trained artists dedicated to perfecting every fade, line, and contour.' },
-                { icon: Sparkles, title: 'Premium Products', desc: 'We strictly use luxury grooming products to protect your hair and skin health.' },
-                { icon: Star, title: 'VIP Experience', desc: 'From the hot towel finish to the beverage, every visit feels like a VIP event.' },
-                { icon: Shield, title: 'Attention to Detail', desc: 'No rushed cuts. We allocate proper time to ensure flawless, lasting results.' },
-              ].map((item, i) => (
-                <motion.div key={i} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-50px" }} transition={{ duration: 0.5, delay: i * 0.1 }} className="glass p-8 rounded-2xl border border-white/5 bg-[#111]/80 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.5)] hover:border-gold-500/30 transition-all duration-300 group">
-                  <div className="w-14 h-14 rounded-full bg-black/50 border border-white/5 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-gold-500/10 transition-transform">
-                    <item.icon className="text-gold-500" size={24} />
-                  </div>
-                  <h3 className="text-xl font-montserrat font-semibold text-white mb-3">{item.title}</h3>
-                  <p className="text-zinc-400 text-sm leading-relaxed">{item.desc}</p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
+          </MouseSpotlightWrapper>
         </section>
 
-        {/* 3. Signature Services (Luxury Gradient Overlay) */}
-        <section className="py-32 relative bg-gradient-to-br from-[#050505] via-[#0a0a0a] to-[#1a1400]">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(212,175,55,0.05),transparent_50%)]" />
+        {/* 3. Signature Services (Luxury Gradient Overlay + Ambient Glow) */}
+        <section className="py-32 relative bg-gradient-to-br from-[#050505] via-[#0a0a0a] to-[#1a1400] overflow-hidden">
+          <motion.div 
+            animate={{ opacity: [0.1, 0.3, 0.1] }} transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(212,175,55,0.08),transparent_60%)] pointer-events-none" 
+          />
           <div className="container mx-auto px-4 max-w-7xl relative z-10">
             <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
               <div>
@@ -177,8 +251,12 @@ export default function Home() {
                 { title: 'Haircut & Shave', price: '$80+', duration: '60 MIN', featured: true },
                 { title: 'Manicure & Pedicure', price: '$60+', duration: '45 MIN', featured: false },
               ].map((svc, i) => (
-                <motion.div key={i} initial={{ opacity: 0, scale: 0.98 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.4, delay: i * 0.1 }} className={`glass p-8 rounded-2xl flex flex-col justify-between hover:scale-[1.02] hover:shadow-[0_0_40px_rgba(212,175,55,0.2)] transition-all duration-500 group ${svc.featured ? 'border-gold-500/50 bg-gold-500/5' : 'border-white/5 bg-white/[0.02]'}`}>
-                  <div>
+                <motion.div key={i} initial={{ opacity: 0, scale: 0.98 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.4, delay: i * 0.1 }} className={`glass relative p-8 rounded-2xl flex flex-col justify-between hover:-translate-y-2 hover:shadow-[0_20px_50px_rgba(212,175,55,0.15)] transition-all duration-500 group ${svc.featured ? 'border-gold-500/50 bg-gold-500/5 shadow-[0_0_30px_rgba(212,175,55,0.05)]' : 'border-white/5 bg-white/[0.02]'}`}>
+                  {/* Breathing Box Shadow for Featured */}
+                  {svc.featured && (
+                    <motion.div animate={{ opacity: [0.5, 1, 0.5] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }} className="absolute inset-0 rounded-2xl shadow-[0_0_30px_rgba(212,175,55,0.2)] pointer-events-none" />
+                  )}
+                  <div className="relative z-10">
                     {svc.featured && <span className="text-[10px] bg-gold-500 text-black px-3 py-1 rounded-full font-bold uppercase tracking-widest mb-6 inline-block shadow-[0_0_20px_rgba(212,175,55,0.3)]">Popular</span>}
                     <div className="flex justify-between items-center mb-4">
                       <h3 className="text-2xl font-montserrat font-semibold text-white group-hover:text-gold-500 transition-colors">{svc.title}</h3>
@@ -188,18 +266,19 @@ export default function Home() {
                       <Clock size={14} /> {svc.duration}
                     </div>
                   </div>
-                  <Button variant={svc.featured ? "primary" : "outline"} className={`w-full ${!svc.featured && 'border-white/10 text-white hover:border-gold-500 hover:text-gold-500'}`} onClick={openModal}>Book {svc.title}</Button>
+                  <Button variant={svc.featured ? "primary" : "outline"} className={`w-full relative z-10 ${!svc.featured && 'border-white/10 text-white hover:border-gold-500 hover:text-gold-500'}`} onClick={openModal}>Book {svc.title}</Button>
                   {/* Hover Edge Glow */}
-                  <div className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-gold-500/30 transition-colors pointer-events-none" />
+                  <div className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-gold-500/30 transition-colors pointer-events-none z-0" />
                 </motion.div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* 4. Experience Journey Timeline (Vertical Spotlights) */}
-        <section className="py-32 relative bg-[#080808]">
+        {/* 4. Experience Journey Timeline (Animated Beam) */}
+        <section className="py-32 relative bg-[#080808] overflow-hidden">
           <div className="absolute left-1/2 top-0 bottom-0 w-full max-w-lg -translate-x-1/2 bg-[radial-gradient(ellipse_at_center,rgba(212,175,55,0.03),transparent_70%)] pointer-events-none" />
+          
           <div className="container mx-auto px-4 max-w-4xl relative z-10" ref={timelineRef}>
             <div className="text-center mb-20">
               <span className="text-gold-500 font-semibold tracking-widest uppercase text-sm mb-4 block">The Process</span>
@@ -207,8 +286,14 @@ export default function Home() {
             </div>
 
             <div className="relative pl-8 md:pl-0">
-              <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-px bg-white/5 -translate-x-1/2">
-                <div className="timeline-line w-full bg-gradient-to-b from-gold-400 to-gold-600 shadow-[0_0_20px_rgba(212,175,55,0.8)]" />
+              {/* Timeline Track */}
+              <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-px bg-white/5 -translate-x-1/2 overflow-hidden">
+                <div className="timeline-line absolute top-0 left-0 w-full bg-gold-500/20" />
+                {/* Continuous Light Beam */}
+                <motion.div 
+                  animate={{ y: ["-100%", "500%"] }} transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+                  className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-transparent via-gold-500 to-transparent shadow-[0_0_20px_rgba(212,175,55,1)]"
+                />
               </div>
 
               {[
@@ -230,9 +315,9 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 5. Popular Styles Gallery Carousel (Dark Design) */}
+        {/* 5. Popular Styles Gallery Carousel (Aggressive Zoom) */}
         <section className="py-24 overflow-hidden bg-[#0c0c0c] border-y border-white/5 relative">
-           <div className="absolute inset-0 bg-[radial-gradient(circle_at_left,rgba(255,255,255,0.02),transparent_50%)]" />
+           <div className="absolute inset-0 bg-[radial-gradient(circle_at_left,rgba(255,255,255,0.02),transparent_50%)] pointer-events-none" />
            <div className="text-center mb-16 relative z-10">
               <h2 className="text-4xl md:text-5xl font-montserrat font-bold text-white tracking-tight">POPULAR <span className="text-gradient">STYLES</span></h2>
             </div>
@@ -249,10 +334,11 @@ export default function Home() {
                 { img: "/hero.png", title: "Burst Fade" },
               ].map((style, idx) => (
                 <div key={idx} className="relative w-[300px] h-[400px] rounded-3xl overflow-hidden shrink-0 group border border-white/5 shadow-xl bg-black">
-                  <Image src={style.img} alt={style.title} fill sizes="(max-width: 768px) 100vw, 300px" className="object-cover transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-100" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
-                  <div className="absolute bottom-6 left-6 right-6">
-                     <div className="glass px-4 py-2 rounded-xl border border-white/10 backdrop-blur-md inline-block">
+                  <Image src={style.img} alt={style.title} fill sizes="(max-width: 768px) 100vw, 300px" className="object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-125 opacity-80 group-hover:opacity-100" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent group-hover:via-black/40 transition-colors duration-700" />
+                  <div className="absolute inset-0 border-2 border-transparent group-hover:border-gold-500/30 rounded-3xl transition-colors duration-700 pointer-events-none z-10" />
+                  <div className="absolute bottom-6 left-6 right-6 z-20">
+                     <div className="glass px-4 py-2 rounded-xl border border-white/10 backdrop-blur-md inline-block transform transition-transform duration-500 group-hover:-translate-y-2 group-hover:shadow-[0_10px_20px_rgba(0,0,0,0.5)]">
                        <span className="font-montserrat font-semibold text-white text-sm tracking-wide uppercase">{style.title}</span>
                      </div>
                   </div>
@@ -262,16 +348,20 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 6. Customer Testimonials (Glassmorphism Wrap) */}
-        <section className="py-32 relative bg-[url('/noise.png')] bg-[#111]">
-          <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-80" />
+        {/* 6. Customer Testimonials (Floating Background Particles) */}
+        <section className="py-32 relative bg-[#111] overflow-hidden">
+          <AmbientParticles />
+          <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-80 z-0 pointer-events-none" />
           <div className="container mx-auto px-4 max-w-7xl relative z-10">
             <div className="flex flex-col md:flex-row justify-between items-center mb-20 gap-10">
               <div className="text-center md:text-left">
                 <span className="text-gold-500 font-semibold tracking-widest uppercase text-sm mb-4 block">Real Results</span>
                 <h2 className="text-4xl md:text-6xl font-montserrat font-bold text-white tracking-tight">CLIENT <span className="text-gradient">REVIEWS</span></h2>
               </div>
-              <div className="glass p-6 rounded-2xl flex items-center gap-6 border border-gold-500/30 shadow-[0_10px_40px_rgba(212,175,55,0.15)] bg-black/40">
+              <motion.div 
+                animate={{ y: [0, -10, 0] }} transition={{ repeat: Infinity, duration: 5, ease: "easeInOut" }}
+                className="glass p-6 rounded-2xl flex items-center gap-6 border border-gold-500/30 shadow-[0_10px_40px_rgba(212,175,55,0.15)] bg-black/40"
+              >
                 <div className="text-5xl font-extrabold font-montserrat text-white">4.9</div>
                 <div>
                   <div className="flex text-gold-500 mb-1">
@@ -279,7 +369,7 @@ export default function Home() {
                   </div>
                   <span className="text-zinc-400 text-sm font-semibold tracking-wide">200+ Reviews | 5k+ Clients</span>
                 </div>
-              </div>
+              </motion.div>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -288,12 +378,12 @@ export default function Home() {
                 { name: 'James T.', text: 'Showtime truly lives up to its name. The vibe is premium, the barbers are professional, and the result is always a 10/10.' },
                 { name: 'David L.', text: 'A masterclass in grooming. They take their time and ensure you look completely sharp before you leave.' }
               ].map((review, i) => (
-                <motion.div key={i} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.15, duration: 0.5 }} className="glass p-10 rounded-3xl relative border border-white/10 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.6)] transition-all bg-black/60 group">
-                  <Quote className="text-gold-500/10 absolute top-8 right-8 group-hover:text-gold-500/20 transition-colors" size={60} />
+                <motion.div key={i} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.15, duration: 0.5 }} className="glass p-10 rounded-3xl relative border border-white/10 hover:-translate-y-3 hover:shadow-[0_30px_60px_rgba(0,0,0,0.8)] hover:border-gold-500/20 transition-all duration-500 bg-black/60 group">
+                  <Quote className="text-gold-500/10 absolute top-8 right-8 group-hover:text-gold-500/30 transition-colors duration-500" size={60} />
                   <div className="flex text-gold-500 mb-6">
                     {[...Array(5)].map((_, j) => <Star key={j} size={16} fill="currentColor" />)}
                   </div>
-                  <p className="text-zinc-300 italic mb-8 text-base leading-relaxed relative z-10">"{review.text}"</p>
+                  <p className="text-zinc-300 italic mb-8 text-base leading-relaxed relative z-10 group-hover:text-white transition-colors duration-500">"{review.text}"</p>
                   <div className="flex items-center gap-3">
                     <CheckCircle2 size={18} className="text-gold-500"/>
                     <p className="text-white font-montserrat font-bold uppercase tracking-wider text-sm">{review.name}</p>
@@ -304,19 +394,28 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 7. Premium Final CTA (Gold Ambient Glow) */}
+        {/* 7. Premium Final CTA (Continuous Animated Glow) */}
         <section className="py-40 bg-[#050505] relative border-t border-white/5 overflow-hidden">
-           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-gold-900/40 via-[#050505] to-[#050505] opacity-80" />
-           {/* Animated Particles */}
-           <motion.div animate={{ y: [0, -20, 0], opacity: [0.3, 0.6, 0.3] }} transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }} className="absolute top-20 left-[20%] w-2 h-2 bg-gold-500 rounded-full blur-[2px]" />
-           <motion.div animate={{ y: [0, 30, 0], opacity: [0.2, 0.5, 0.2] }} transition={{ repeat: Infinity, duration: 6, ease: "easeInOut", delay: 2 }} className="absolute bottom-40 right-[25%] w-3 h-3 bg-gold-500 rounded-full blur-[3px]" />
+           {/* Animated Background Rays */}
+           <motion.div 
+             animate={{ rotate: 360 }} transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
+             className="absolute inset-0 bg-[conic-gradient(from_0deg,transparent_0deg,rgba(212,175,55,0.05)_90deg,transparent_180deg)] origin-center opacity-50 pointer-events-none" 
+           />
+           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-gold-900/40 via-[#050505] to-[#050505] opacity-90 pointer-events-none" />
+           <AmbientParticles />
 
           <div className="container mx-auto px-4 text-center max-w-4xl relative z-10">
             <motion.h2 
               initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
-              className="text-5xl md:text-7xl lg:text-[5.5rem] font-montserrat font-extrabold text-white mb-8 tracking-tighter"
+              className="text-5xl md:text-7xl lg:text-[6rem] font-montserrat font-extrabold text-white mb-8 tracking-tighter"
             >
-              IT'S TIME FOR <span className="text-gradient">SHOWTIME</span>
+              {/* Continuous Text Glow */}
+              <motion.span
+                animate={{ textShadow: ["0px 0px 10px rgba(212,175,55,0)", "0px 0px 40px rgba(212,175,55,0.6)", "0px 0px 10px rgba(212,175,55,0)"] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              >
+                IT'S TIME FOR <span className="text-gradient">SHOWTIME</span>
+              </motion.span>
             </motion.h2>
             <motion.p 
               initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.3, duration: 0.8 }}
@@ -327,9 +426,18 @@ export default function Home() {
             <motion.div 
               initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.5, duration: 0.8 }}
             >
-              <Button onClick={openModal} size="lg" className="px-14 h-16 text-lg font-bold shadow-[0_0_60px_rgba(212,175,55,0.4)] hover:shadow-[0_0_100px_rgba(212,175,55,0.7)] transition-shadow">
-                SECURE YOUR CHAIR <ArrowRight className="ml-3" size={20} />
-              </Button>
+              <Magnetic>
+                {/* Breathing Button Glow */}
+                <motion.div 
+                  animate={{ boxShadow: ["0px 0px 30px rgba(212,175,55,0.3)", "0px 0px 60px rgba(212,175,55,0.7)", "0px 0px 30px rgba(212,175,55,0.3)"] }}
+                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                  className="inline-block rounded-lg"
+                >
+                  <Button onClick={openModal} size="lg" className="px-14 h-16 text-lg font-bold">
+                    SECURE YOUR CHAIR <ArrowRight className="ml-3" size={20} />
+                  </Button>
+                </motion.div>
+              </Magnetic>
             </motion.div>
           </div>
         </section>

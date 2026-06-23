@@ -36,11 +36,13 @@ export function Navbar() {
       }`}
     >
       <div className="container mx-auto px-4 md:px-8 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2">
-          <span className="font-montserrat font-bold text-2xl tracking-tighter text-white">
-            SHOWTIME<span className="text-gold-500">.</span>
-          </span>
-        </Link>
+        {/* Logo */}
+        <div className="flex-shrink-0">
+          <Link href="/" className="font-montserrat font-black text-2xl tracking-tighter text-white uppercase flex flex-col leading-none">
+            <span className="text-gold-500">SHOWTIME</span>
+            <span className="text-[10px] tracking-[0.2em] font-semibold text-zinc-400 mt-1">BARBER SALON</span>
+          </Link>
+        </div>
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-8">
