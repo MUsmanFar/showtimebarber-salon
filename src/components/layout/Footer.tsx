@@ -1,0 +1,93 @@
+import Link from 'next/link';
+import { MapPin, Phone, Mail } from 'lucide-react';
+
+export function Footer() {
+  return (
+    <footer className="bg-[#030303] pt-20 pb-10 border-t border-white/5">
+      <div className="container mx-auto px-4 md:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+          {/* Brand */}
+          <div className="col-span-1 md:col-span-1">
+            <Link href="/" className="inline-block mb-6">
+              <span className="font-montserrat font-bold text-3xl tracking-tighter text-white">
+                SHOWTIME<span className="text-gold-500">.</span>
+              </span>
+            </Link>
+            <p className="text-zinc-400 text-sm leading-relaxed mb-6">
+              Precision, style, and confidence in every cut. Experience luxury grooming at its finest in Accokeek, MD.
+            </p>
+            <div className="flex gap-4">
+              <a href="#" className="text-zinc-400 hover:text-gold-500 transition-colors font-semibold">
+                IG
+              </a>
+              <a href="#" className="text-zinc-400 hover:text-gold-500 transition-colors font-semibold">
+                FB
+              </a>
+              <a href="#" className="text-zinc-400 hover:text-gold-500 transition-colors font-semibold">
+                X
+              </a>
+            </div>
+          </div>
+
+          {/* Quick Links */}
+          <div>
+            <h4 className="font-montserrat font-semibold text-white uppercase tracking-wider mb-6">Quick Links</h4>
+            <ul className="space-y-4">
+              {['About Us', 'Services', 'Gallery', 'Reviews'].map((item) => (
+                <li key={item}>
+                  <Link href={`/${item.toLowerCase().replace(' ', '-')}`} className="text-zinc-400 hover:text-gold-500 transition-colors text-sm">
+                    {item}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Contact */}
+          <div>
+            <h4 className="font-montserrat font-semibold text-white uppercase tracking-wider mb-6">Contact Us</h4>
+            <ul className="space-y-4">
+              <li className="flex items-start gap-3 text-sm text-zinc-400">
+                <MapPin size={18} className="text-gold-500 shrink-0 mt-0.5" />
+                <span>123 Grooming Blvd<br />Accokeek, MD 20607</span>
+              </li>
+              <li className="flex items-center gap-3 text-sm text-zinc-400">
+                <Phone size={18} className="text-gold-500 shrink-0" />
+                <span>(555) 123-4567</span>
+              </li>
+              <li className="flex items-center gap-3 text-sm text-zinc-400">
+                <Mail size={18} className="text-gold-500 shrink-0" />
+                <span>hello@showtimebarber.com</span>
+              </li>
+            </ul>
+          </div>
+
+          {/* Hours */}
+          <div>
+            <h4 className="font-montserrat font-semibold text-white uppercase tracking-wider mb-6">Opening Hours</h4>
+            <ul className="space-y-4 text-sm">
+              <li className="flex justify-between border-b border-white/5 pb-2">
+                <span className="text-zinc-400">Mon - Fri</span>
+                <span className="text-white">9:00 AM - 8:00 PM</span>
+              </li>
+              <li className="flex justify-between border-b border-white/5 pb-2">
+                <span className="text-zinc-400">Saturday</span>
+                <span className="text-white">9:00 AM - 6:00 PM</span>
+              </li>
+              <li className="flex justify-between border-b border-white/5 pb-2">
+                <span className="text-zinc-400">Sunday</span>
+                <span className="text-gold-500">Closed</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="text-center pt-8 border-t border-white/5">
+          <p className="text-xs text-zinc-600">
+            &copy; {new Date().getFullYear()} Showtime Barber & Salon. All rights reserved.
+          </p>
+        </div>
+      </div>
+    </footer>
+  );
+}
