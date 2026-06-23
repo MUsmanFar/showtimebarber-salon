@@ -2,9 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
+import { useBooking } from '@/components/BookingModal';
 
 const links = [
   { name: 'Home', href: '/' },
@@ -18,6 +19,7 @@ const links = [
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const { openModal } = useBooking();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -54,7 +56,7 @@ export function Navbar() {
         </nav>
 
         <div className="hidden md:block">
-          <Button size="sm">Book Now</Button>
+          <Button size="sm" onClick={openModal}>Book Now</Button>
         </div>
 
         {/* Mobile Toggle */}
@@ -67,26 +69,28 @@ export function Navbar() {
       </div>
 
       {/* Mobile Nav Menu */}
-      {isOpen && (
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -20 }}
-          className="absolute top-full left-0 w-full glass flex flex-col items-center py-8 gap-6 border-b border-white/10 md:hidden"
-        >
-          {links.map((link) => (
-            <Link
-              key={link.name}
-              href={link.href}
-              onClick={() => setIsOpen(false)}
-              className="text-lg font-medium text-white hover:text-gold-500 transition-colors uppercase tracking-widest"
-            >
-              {link.name}
-            </Link>
-          ))}
-          <Button className="mt-4 w-3/4">Book Appointment</Button>
-        </motion.div>
-      )}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="absolute top-full left-0 w-full glass flex flex-col items-center py-8 gap-6 border-b border-white/10 md:hidden"
+          >
+            {links.map((link) => (
+              <Link
+                key={link.name}
+                href={link.href}
+                onClick={() => setIsOpen(false)}
+                className="text-lg font-medium text-white hover:text-gold-500 transition-colors uppercase tracking-widest"
+              >
+                {link.name}
+              </Link>
+            ))}
+            <Button className="mt-4 w-3/4" onClick={() => { setIsOpen(false); openModal(); }}>Book Appointment</Button>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }

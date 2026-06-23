@@ -132,7 +132,7 @@ export default function Contact() {
                     </div>
                     <div>
                       <h4 className="text-white font-semibold mb-1">Location</h4>
-                      <p className="text-zinc-400 mb-3">123 Grooming Blvd<br />Accokeek, MD 20607</p>
+                      <p className="text-zinc-400 mb-3">7091 Berry Rd Ste 2<br />Accokeek, MD 20607</p>
                       <a href="https://maps.google.com" target="_blank" className="text-gold-500 hover:text-white transition-colors text-sm font-semibold flex items-center gap-1 uppercase tracking-wider">
                         Get Directions <Navigation size={14} />
                       </a>
@@ -144,7 +144,7 @@ export default function Contact() {
                     </div>
                     <div>
                       <h4 className="text-white font-semibold mb-1">Phone</h4>
-                      <a href="tel:5551234567" className="text-zinc-400 hover:text-gold-500 transition-colors block text-lg">(555) 123-4567</a>
+                      <a href="tel:7036233017" className="text-zinc-400 hover:text-gold-500 transition-colors block text-lg">(703) 623-3017</a>
                     </div>
                   </li>
                   <li className="flex items-start gap-4">

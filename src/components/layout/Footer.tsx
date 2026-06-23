@@ -47,13 +47,13 @@ export function Footer() {
           <div>
             <h4 className="font-montserrat font-semibold text-white uppercase tracking-wider mb-6">Contact Us</h4>
             <ul className="space-y-4">
-              <li className="flex items-start gap-3 text-sm text-zinc-400">
-                <MapPin size={18} className="text-gold-500 shrink-0 mt-0.5" />
-                <span>123 Grooming Blvd<br />Accokeek, MD 20607</span>
+              <li className="flex items-start gap-3">
+                <MapPin className="text-gold-500 shrink-0 mt-1" size={18} />
+                <span className="text-zinc-400 text-sm">7091 Berry Rd Ste 2<br />Accokeek, MD 20607</span>
               </li>
-              <li className="flex items-center gap-3 text-sm text-zinc-400">
-                <Phone size={18} className="text-gold-500 shrink-0" />
-                <span>(555) 123-4567</span>
+              <li className="flex items-center gap-3">
+                <Phone className="text-gold-500 shrink-0" size={18} />
+                <a href="tel:7036233017" className="text-zinc-400 hover:text-gold-500 transition-colors text-sm">(703) 623-3017</a>
               </li>
               <li className="flex items-center gap-3 text-sm text-zinc-400">
                 <Mail size={18} className="text-gold-500 shrink-0" />

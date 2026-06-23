@@ -5,6 +5,8 @@ import { LucideIcon, Clock } from 'lucide-react';
 import { Button } from './Button';
 import { Magnetic } from './Magnetic';
 
+import { useBooking } from '../BookingModal';
+
 export interface ServiceCardProps {
   title: string;
   price: string;
@@ -16,6 +18,8 @@ export interface ServiceCardProps {
 }
 
 export function ServiceCard({ title, price, duration, description, Icon, delay = 0, featured = false }: ServiceCardProps) {
+  const { openModal } = useBooking();
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
@@ -57,7 +61,7 @@ export function ServiceCard({ title, price, duration, description, Icon, delay =
 
       <div className="mt-auto pt-6 border-t border-white/5 relative z-10">
         <Magnetic>
-          <Button variant={featured ? 'primary' : 'outline'} className="w-full">Book This Service</Button>
+          <Button variant={featured ? 'primary' : 'outline'} className="w-full" onClick={openModal}>Book This Service</Button>
         </Magnetic>
       </div>
       
