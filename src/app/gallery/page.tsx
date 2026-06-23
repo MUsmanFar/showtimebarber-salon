@@ -50,7 +50,7 @@ export default function Gallery() {
                 onClick={() => setSelectedImage(src)}
               >
                 <div className="relative w-full aspect-[3/4]">
-                  <Image src={src} alt="Gallery image" fill className="object-cover transition-transform duration-700 group-hover:scale-110" />
+                  <Image src={src} alt="Gallery image" fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" className="object-cover transition-transform duration-700 group-hover:scale-110" />
                   <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                      <span className="text-gold-500 font-montserrat font-bold tracking-widest uppercase text-sm border border-gold-500 px-4 py-2 rounded-full">View</span>
                   </div>
