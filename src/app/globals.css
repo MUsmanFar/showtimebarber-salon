@@ -53,3 +53,8 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #D4AF37;
 }
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}

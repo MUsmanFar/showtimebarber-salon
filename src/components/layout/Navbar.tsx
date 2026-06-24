@@ -38,9 +38,9 @@ export function Navbar() {
       <div className="container mx-auto px-4 md:px-8 flex items-center justify-between">
         {/* Logo */}
         <div className="flex-shrink-0">
-          <Link href="/" className="font-montserrat font-black text-2xl tracking-tighter text-white uppercase flex flex-col leading-none">
-            <span className="text-gold-500">SHOWTIME</span>
-            <span className="text-[10px] tracking-[0.2em] font-semibold text-zinc-400 mt-1">BARBER SALON</span>
+          <Link href="/" className="font-montserrat font-black text-2xl md:text-3xl tracking-tighter text-white uppercase flex flex-col leading-none group">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold-400 via-gold-500 to-yellow-600 group-hover:brightness-125 transition-all duration-300">SHOWTIME</span>
+            <span className="text-[10px] md:text-xs tracking-[0.3em] font-medium text-zinc-400 mt-1.5 group-hover:text-gold-500/80 transition-colors duration-300">BARBER SALOON</span>
           </Link>
         </div>
 
