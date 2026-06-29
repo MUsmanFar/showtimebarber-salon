@@ -186,7 +186,7 @@ export default function Home() {
                   className="group flex flex-col rounded-[2.5rem] overflow-hidden bg-white shadow-sm hover:shadow-[0_30px_60px_rgba(37,99,235,0.08)] hover:-translate-y-3 transition-all duration-500 h-full relative border border-transparent hover:border-royal-blue/10"
                 >
                   <div className="relative aspect-[4/3] w-full overflow-hidden shrink-0">
-                    <Image src={svc.img} alt={svc.title} fill className="object-cover transition-transform duration-[1.5s] ease-[0.25,0.46,0.45,0.94] group-hover:scale-110" priority={i < 3} />
+                    <Image src={svc.img} alt={svc.title} fill className="object-cover transition-transform duration-[1.5s] ease-[0.25,0.46,0.45,0.94] group-hover:scale-110" priority />
                     <div className="absolute inset-0 bg-navy/10 group-hover:bg-transparent transition-colors duration-500" />
                     
                     {/* Floating Icon */}
@@ -219,7 +219,7 @@ export default function Home() {
               <div 
                 className="relative h-[900px] rounded-[3rem] overflow-hidden shadow-2xl group"
               >
-                <Image src="https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&q=80&w=1200" alt="Professional Salon Services" fill className="object-cover transition-transform duration-[2s] group-hover:scale-105" />
+                <Image src="https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&q=80&w=1200" alt="Professional Salon Services" fill className="object-cover transition-transform duration-[2s] group-hover:scale-105" priority />
                 <div className="absolute inset-0 bg-gradient-to-t from-navy/50 via-transparent to-transparent" />
                 
                 {/* Floating badge */}
@@ -276,30 +276,40 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 5. CTA Section (Refined for extreme elegance and readability) */}
-        <section className="relative py-32 bg-white flex items-center justify-center">
-          <div className="container mx-auto px-4">
-            <div className="max-w-5xl mx-auto rounded-[3rem] overflow-hidden relative shadow-2xl">
-              {/* Card Background Image with strong dark overlay */}
-              <div className="absolute inset-0">
-                 <Image src="https://images.unsplash.com/photo-1522337660859-02fbefca4702?auto=format&fit=crop&q=80&w=2000" alt="Salon Atmosphere" fill className="object-cover" />
-                 <div className="absolute inset-0 bg-navy/90 mix-blend-multiply" />
-                 <div className="absolute inset-0 bg-gradient-to-br from-navy via-navy/95 to-navy/80" />
-              </div>
+        {/* 5. CTA Section (Warm radial glow, dark overlay, massive contrast) */}
+        <section className="relative py-48 overflow-hidden flex items-center justify-center">
+          {/* Background Image */}
+          <div className="absolute inset-0">
+             <Image src="https://images.unsplash.com/photo-1522337660859-02fbefca4702?auto=format&fit=crop&q=80&w=2000" alt="Salon Atmosphere" fill className="object-cover" priority />
+             {/* Much darker overlay for premium contrast */}
+             <div className="absolute inset-0 bg-black/75 backdrop-blur-sm" />
+             
+             {/* Warm radial glow directly behind the card to make it pop */}
+             <div 
+               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] max-w-[800px] h-[80vw] max-h-[800px] bg-[radial-gradient(circle,rgba(212,175,55,0.3)_0%,transparent_60%)] z-0"
+             />
+          </div>
+
+          <div className="container mx-auto px-4 relative z-10">
+            <div 
+              className="max-w-4xl mx-auto p-12 md:p-20 rounded-[3rem] text-center bg-white/20 backdrop-blur-2xl border border-white/30 shadow-[0_40px_100px_rgba(0,0,0,0.6)] relative overflow-hidden"
+            >
+              {/* Internal card glow */}
+              <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent z-0" />
               
-              <div className="relative z-10 p-12 md:p-24 text-center">
-                <span className="text-gold-500 font-bold tracking-[0.2em] uppercase text-xs md:text-sm mb-6 block">Look & Feel Your Best</span>
-                <h2 className="text-5xl md:text-6xl lg:text-7xl font-cormorant font-bold text-white mb-8 tracking-tight">
-                  Ready for Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold-300 to-gold-500">Next Look?</span>
+              <div className="relative z-10">
+                <span className="text-gold-300 font-bold tracking-[0.2em] uppercase text-xs md:text-sm mb-6 block drop-shadow-md">Look & Feel Your Best</span>
+                <h2 className="text-5xl md:text-6xl lg:text-7xl font-cormorant font-bold text-white mb-8 tracking-tight drop-shadow-[0_4px_10px_rgba(0,0,0,0.8)]">
+                  Ready for Your <span className="text-gold-400 drop-shadow-sm">Next Look?</span>
                 </h2>
-                <p className="text-slate-300 text-lg md:text-xl mb-12 font-light max-w-2xl mx-auto leading-relaxed">
+                <p className="text-white text-lg md:text-xl mb-12 font-light max-w-2xl mx-auto leading-relaxed drop-shadow-md">
                   Step into our world of elegance. Book your appointment today and let our experts bring out your most beautiful you.
                 </p>
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-                  <Button onClick={openModal} size="lg" className="px-12 h-16 text-lg font-medium shadow-xl bg-gold-500 hover:bg-gold-600 text-navy w-full sm:w-auto border-none transition-all duration-300">
+                  <Button onClick={openModal} size="lg" className="px-12 h-16 text-lg font-medium shadow-2xl hover:shadow-[0_20px_40px_rgba(212,175,55,0.4)] bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-400 hover:to-gold-500 text-navy w-full sm:w-auto border-none transition-all duration-300 hover:-translate-y-1">
                     Book Appointment <ArrowRight className="ml-3" size={20} />
                   </Button>
-                  <Button variant="outline" size="lg" className="px-12 h-16 text-lg font-medium border-white/20 text-white hover:bg-white/10 w-full sm:w-auto transition-all duration-300">
+                  <Button variant="outline" size="lg" className="px-12 h-16 text-lg font-medium border-white/40 text-white hover:bg-white hover:text-navy w-full sm:w-auto transition-all duration-300 backdrop-blur-md hover:-translate-y-1">
                     <Phone className="mr-3" size={20} /> Call Now
                   </Button>
                 </div>
