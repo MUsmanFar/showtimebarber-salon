@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
-import { Montserrat, Poppins } from "next/font/google";
+import { Cormorant_Garamond, Poppins } from "next/font/google";
 import "./globals.css";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { BookingProvider } from "@/components/BookingModal";
 import { BackgroundSystem } from "@/components/BackgroundSystem";
 
-const montserrat = Montserrat({
-  variable: "--font-montserrat",
+const cormorantGaramond = Cormorant_Garamond({
+  variable: "--font-cormorant",
+  weight: ["300", "400", "500", "600", "700"],
   subsets: ["latin"],
 });
 
@@ -17,33 +18,51 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Showtime Barber & Salon | Luxury Grooming in Accokeek",
-  description: "Experience premium grooming, luxury service, and precision craftsmanship at Showtime Barber & Salon in Accokeek, MD.",
+  title: "Charles Bruce Salon & Spa | Luxury Hair Styling",
+  description: "Experience premium grooming, luxury service, and precision craftsmanship at Charles Bruce Salon & Spa in Medford, NJ. Serving the community for 50+ years.",
+  icons: {
+    icon: '/favicon.ico',
+    apple: '/logo.png',
+  },
   openGraph: {
-    title: "Showtime Barber & Salon",
-    description: "Experience premium grooming in Accokeek, Maryland.",
+    title: "Charles Bruce Salon & Spa | Luxury Hair Styling",
+    description: "Experience premium grooming, luxury service, and precision craftsmanship at Charles Bruce Salon & Spa in Medford, NJ. Serving the community for 50+ years.",
     type: "website",
     locale: "en_US",
-    url: "https://showtimebarber.com",
-    siteName: "Showtime Barber & Salon",
+    url: "https://charlesbrucesalon.com",
+    siteName: "Charles Bruce Salon & Spa",
+    images: [
+      {
+        url: 'https://charlesbrucesalon.com/opengraph-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Charles Bruce Salon & Spa',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: "Charles Bruce Salon & Spa | Luxury Hair Styling",
+    description: "Experience premium grooming, luxury service, and precision craftsmanship at Charles Bruce Salon & Spa in Medford, NJ. Serving the community for 50+ years.",
+    images: ['https://charlesbrucesalon.com/opengraph-image.jpg'],
   },
 };
 
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "HairSalon",
-  "name": "Showtime Barber & Salon",
-  "image": "https://showtimebarber.com/hero.png",
-  "telephone": "(703) 623-3017",
+  "name": "Charles Bruce Salon & Spa",
+  "image": "https://charlesbrucesalon.com/hero.jpg",
+  "telephone": "(555) 123-4567",
   "address": {
     "@type": "PostalAddress",
-    "streetAddress": "7091 Berry Rd Ste 2",
-    "addressLocality": "Accokeek",
-    "addressRegion": "MD",
-    "postalCode": "20607",
+    "streetAddress": "123 Medford Rd",
+    "addressLocality": "Medford",
+    "addressRegion": "NJ",
+    "postalCode": "08055",
     "addressCountry": "US"
   },
-  "priceRange": "$$"
+  "priceRange": "$$$"
 };
 
 export default function RootLayout({
@@ -52,11 +71,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${montserrat.variable} ${poppins.variable} antialiased`}
-    >
-      <body className="min-h-screen flex flex-col font-poppins bg-transparent text-offwhite overflow-x-hidden">
+      <html
+        lang="en"
+        className={`${cormorantGaramond.variable} ${poppins.variable} antialiased`}
+        suppressHydrationWarning
+      >
+        <body suppressHydrationWarning className="min-h-screen flex flex-col font-poppins bg-white text-navy overflow-x-hidden">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

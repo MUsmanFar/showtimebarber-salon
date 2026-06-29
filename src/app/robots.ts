@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/api/'],
     },
-    sitemap: 'https://showtimebarber.com/sitemap.xml',
+    sitemap: 'https://charlesbrucesalon.com/sitemap.xml',
   };
 }

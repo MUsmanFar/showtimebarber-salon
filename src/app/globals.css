@@ -1,19 +1,23 @@
 @import "tailwindcss";
 
 @theme {
+  --color-royal-blue: #2563EB;
+  --color-navy: #0F172A;
+  --color-burgundy: #800020;
   --color-gold-500: #D4AF37;
   --color-gold-400: #E5C158;
   --color-gold-600: #B5952F;
-  --color-black: #050505;
-  --color-offwhite: #FAFAFA;
+  --color-white: #FFFFFF;
+  --color-light-gray: #F8F9FA;
+  --color-border-gray: #ECECEC;
   
-  --font-montserrat: var(--font-montserrat);
+  --font-cormorant: var(--font-cormorant);
   --font-poppins: var(--font-poppins);
 }
 
 :root {
-  --background: #050505;
-  --foreground: #FAFAFA;
+  --background: #FFFFFF;
+  --foreground: #0F172A;
 }
 
 body {
@@ -23,16 +27,16 @@ body {
 
 @layer utilities {
   .glass {
-    @apply bg-black/40 backdrop-blur-md border border-white/10;
+    @apply bg-white/70 backdrop-blur-md border border-white/20 shadow-[0_8px_32px_0_rgba(15,23,42,0.05)];
   }
   .glass-card {
-    @apply bg-zinc-900/60 backdrop-blur-lg border border-gold-500/20 hover:border-gold-500/50 transition-colors;
+    @apply bg-white/90 backdrop-blur-lg border border-border-gray shadow-sm hover:shadow-lg hover:border-gold-500/50 transition-all duration-300;
   }
   .text-gradient {
-    @apply bg-gradient-to-r from-gold-400 via-gold-500 to-yellow-600 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-navy via-royal-blue to-navy bg-clip-text text-transparent;
   }
-  .font-montserrat {
-    font-family: var(--font-montserrat);
+  .font-cormorant {
+    font-family: var(--font-cormorant);
   }
   .font-poppins {
     font-family: var(--font-poppins);
@@ -44,10 +48,10 @@ body {
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #050505;
+  background: #F8F9FA;
 }
 ::-webkit-scrollbar-thumb {
-  background: #333;
+  background: #CBD5E1;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {

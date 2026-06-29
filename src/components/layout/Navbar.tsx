@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
@@ -11,8 +12,7 @@ const links = [
   { name: 'Home', href: '/' },
   { name: 'About', href: '/about' },
   { name: 'Services', href: '/services' },
-  { name: 'Gallery', href: '/gallery' },
-  { name: 'Reviews', href: '/reviews' },
+  { name: 'Pricing', href: '/pricing' },
   { name: 'Contact', href: '/contact' },
 ];
 
@@ -31,16 +31,20 @@ export function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        scrolled ? 'glass py-4' : 'bg-transparent py-6'
-      }`}
+      className={`fixed top-0 w-full z-50 transition-all duration-500 ${scrolled ? 'bg-white/80 backdrop-blur-xl shadow-[0_4px_30px_rgba(0,0,0,0.05)] py-4' : 'bg-transparent py-8'
+        }`}
     >
       <div className="container mx-auto px-4 md:px-8 flex items-center justify-between">
         {/* Logo */}
         <div className="flex-shrink-0">
-          <Link href="/" className="font-montserrat font-black text-2xl md:text-3xl tracking-tighter text-white uppercase flex flex-col leading-none group">
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold-400 via-gold-500 to-yellow-600 group-hover:brightness-125 transition-all duration-300">SHOWTIME</span>
-            <span className="text-[10px] md:text-xs tracking-[0.3em] font-medium text-zinc-400 mt-1.5 group-hover:text-gold-500/80 transition-colors duration-300">BARBER SALOON</span>
+          <Link href="/" className="group block relative w-48 h-16 md:w-56 md:h-20 transition-transform duration-300 hover:scale-[1.02]">
+            <Image
+              src="/logo.png"
+              alt="Charles Bruce Salon & Spa Logo"
+              fill
+              className="object-contain object-left"
+              priority
+            />
           </Link>
         </div>
 
@@ -50,20 +54,21 @@ export function Navbar() {
             <Link
               key={link.name}
               href={link.href}
-              className="text-sm font-medium text-offwhite hover:text-gold-500 transition-colors tracking-wide uppercase"
+              className="group relative text-xs font-semibold text-navy hover:text-royal-blue transition-colors tracking-widest uppercase"
             >
               {link.name}
+              <span className="absolute -bottom-1.5 left-0 w-0 h-[2px] bg-royal-blue transition-all duration-300 group-hover:w-full"></span>
             </Link>
           ))}
         </nav>
 
         <div className="hidden md:block">
-          <Button size="sm" onClick={openModal}>Book Now</Button>
+          <Button size="lg" className="px-8 bg-navy hover:bg-royal-blue text-white shadow-md hover:shadow-lg transition-all" onClick={openModal}>Book Appointment</Button>
         </div>
 
         {/* Mobile Toggle */}
         <button
-          className="md:hidden text-white"
+          className="md:hidden text-navy"
           onClick={() => setIsOpen(!isOpen)}
         >
           {isOpen ? <X size={28} /> : <Menu size={28} />}
@@ -84,7 +89,7 @@ export function Navbar() {
                 key={link.name}
                 href={link.href}
                 onClick={() => setIsOpen(false)}
-                className="text-lg font-medium text-white hover:text-gold-500 transition-colors uppercase tracking-widest"
+                className="text-lg font-medium text-navy hover:text-royal-blue transition-colors uppercase tracking-widest"
               >
                 {link.name}
               </Link>
