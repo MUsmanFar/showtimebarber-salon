@@ -20,11 +20,7 @@ export function ServiceCard({ title, price, duration, description, Icon, delay =
   const { openModal } = useBooking();
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay, duration: 0.6, ease: "easeOut" }}
+    <div
       className={`glass-card rounded-2xl p-6 md:p-8 group relative overflow-hidden flex flex-col h-full bg-white border border-border-gray ${
         featured ? 'border-royal-blue shadow-[0_10px_40px_rgba(37,99,235,0.1)]' : 'shadow-sm'
       }`}
@@ -65,6 +61,6 @@ export function ServiceCard({ title, price, duration, description, Icon, delay =
       </div>
       
       <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-royal-blue via-blue-400 to-royal-blue transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-700" />
-    </motion.div>
+    </div>
   );
 }

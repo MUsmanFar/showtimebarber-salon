@@ -146,11 +146,11 @@ export default function Home() {
                 { label: "Happy Clients", value: "1000+", icon: Heart },
                 { label: "Convenient Locations", value: "2", icon: MapPin },
               ].map((stat, i) => (
-                <motion.div key={i} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-100px" }} transition={{ delay: i * 0.15, duration: 0.8, ease: "easeOut" }} className="flex flex-col items-center justify-center group cursor-default">
+                <div key={i} className="flex flex-col items-center justify-center group cursor-default">
                   <stat.icon className="text-gold-500 mb-5 group-hover:scale-125 group-hover:-translate-y-2 transition-all duration-500" size={36} strokeWidth={1.5} />
                   <h3 className="text-4xl md:text-5xl lg:text-6xl font-cormorant font-bold text-navy mb-2">{stat.value}</h3>
                   <p className="text-slate-500 text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase">{stat.label}</p>
-                </motion.div>
+                </div>
               ))}
             </div>
           </div>
@@ -162,7 +162,7 @@ export default function Home() {
           <div className="absolute bottom-0 left-0 w-[40vw] h-[40vw] bg-[radial-gradient(circle,rgba(212,175,55,0.03)_0%,transparent_70%)] -translate-x-1/3 translate-y-1/3" />
           
           <div className="container mx-auto px-4 max-w-7xl relative z-10">
-            <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="flex flex-col md:flex-row justify-between items-end mb-20 gap-6">
+            <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-6">
               <div>
                 <span className="text-gold-600 font-bold tracking-widest uppercase text-xs mb-4 block">Our Expertise</span>
                 <h2 className="text-4xl md:text-5xl lg:text-6xl font-cormorant font-bold text-navy tracking-tight">FEATURED <span className="text-royal-blue">SERVICES</span></h2>
@@ -170,7 +170,7 @@ export default function Home() {
               <Button variant="outline" className="border-border-gray text-navy hover:bg-white group" onClick={() => window.location.href='/services'}>
                 View All Services <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Button>
-            </motion.div>
+            </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
               {[
@@ -181,8 +181,8 @@ export default function Home() {
                 { title: 'Waxing', img: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&q=80&w=800', desc: 'Gentle facial waxing services including brows, lips and chin.', icon: Star },
                 { title: 'Updo & Special Occasion Styling', img: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&q=80&w=800', desc: 'Beautiful hairstyles for weddings, parties and special occasions.', icon: Star },
               ].map((svc, i) => (
-                <motion.div 
-                  key={i} initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-50px" }} transition={{ duration: 0.8, delay: (i % 3) * 0.2 }} 
+                <div 
+                  key={i} 
                   className="group flex flex-col rounded-[2.5rem] overflow-hidden bg-white shadow-sm hover:shadow-[0_30px_60px_rgba(37,99,235,0.08)] hover:-translate-y-3 transition-all duration-500 h-full relative border border-transparent hover:border-royal-blue/10"
                 >
                   <div className="relative aspect-[4/3] w-full overflow-hidden shrink-0">
@@ -204,7 +204,7 @@ export default function Home() {
                   </div>
                   {/* Subtle gradient border highlight on hover */}
                   <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-navy via-royal-blue to-gold-500 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-700 ease-out" />
-                </motion.div>
+                </div>
               ))}
             </div>
           </div>
@@ -216,8 +216,7 @@ export default function Home() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
               
               {/* Image Left */}
-              <motion.div 
-                initial={{ opacity: 0, x: -50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 1, ease: "easeOut" }}
+              <div 
                 className="relative h-[900px] rounded-[3rem] overflow-hidden shadow-2xl group"
               >
                 <Image src="https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&q=80&w=1200" alt="Professional Salon Services" fill className="object-cover transition-transform duration-[2s] group-hover:scale-105" />
@@ -234,16 +233,16 @@ export default function Home() {
                   <p className="text-navy font-cormorant font-bold text-xl leading-tight mb-3">"An unparalleled luxury experience."</p>
                   <p className="text-slate-500 text-xs font-bold uppercase tracking-wider">- Sarah M.</p>
                 </motion.div>
-              </motion.div>
+              </div>
 
               {/* Text Right */}
               <div>
-                <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }}>
+                <div>
                   <span className="text-gold-600 font-bold tracking-widest uppercase text-xs mb-4 block">The Charles Bruce Standard</span>
                   <h2 className="text-5xl lg:text-6xl font-cormorant font-bold text-navy tracking-tight mb-16">
                     WHY CHOOSE <span className="text-royal-blue">US</span>
                   </h2>
-                </motion.div>
+                </div>
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-12">
                   {[
@@ -252,8 +251,8 @@ export default function Home() {
                     { icon: Sparkles, title: 'Expert Stylists', desc: 'Highly trained professionals passionate about the latest techniques.' },
                     { icon: Droplets, title: 'Relaxing Space', desc: 'A luxurious, comfortable environment designed for your ultimate relaxation.' },
                   ].map((item, i) => (
-                    <motion.div 
-                      key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.15, duration: 0.6 }}
+                    <div 
+                      key={i}
                       className="flex flex-col gap-5 group"
                     >
                       <div className="w-16 h-16 shrink-0 rounded-[1.5rem] bg-[#f8f9fa] flex items-center justify-center text-royal-blue border border-border-gray shadow-sm group-hover:bg-royal-blue group-hover:text-white group-hover:scale-110 transition-all duration-300">
@@ -263,62 +262,49 @@ export default function Home() {
                         <h4 className="text-2xl font-cormorant font-bold text-navy mb-3 group-hover:text-royal-blue transition-colors">{item.title}</h4>
                         <p className="text-slate-500 text-sm leading-relaxed font-light">{item.desc}</p>
                       </div>
-                    </motion.div>
+                    </div>
                   ))}
                 </div>
                 
-                <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.6 }} className="mt-16 pt-16 border-t border-border-gray/50">
+                <div className="mt-16 pt-16 border-t border-border-gray/50">
                    <Button size="lg" className="px-10 h-14 bg-navy hover:bg-royal-blue text-white shadow-xl hover:shadow-[0_15px_30px_rgba(37,99,235,0.2)] transition-all group" onClick={() => window.location.href='/about'}>
                      Read Our Story <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                    </Button>
-                </motion.div>
+                </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* 5. CTA Section (Warm radial glow, dark overlay, massive contrast) */}
-        <section className="relative py-48 overflow-hidden flex items-center justify-center">
-          {/* Background Image */}
-          <div className="absolute inset-0">
-             <Image src="https://images.unsplash.com/photo-1522337660859-02fbefca4702?auto=format&fit=crop&q=80&w=2000" alt="Salon Atmosphere" fill className="object-cover" />
-             {/* Much darker overlay for premium contrast */}
-             <div className="absolute inset-0 bg-black/75 backdrop-blur-sm" />
-             
-             {/* Warm radial glow directly behind the card to make it pop */}
-             <motion.div 
-               animate={{ opacity: [0.5, 0.8, 0.5], scale: [1, 1.1, 1] }} 
-               transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] max-w-[800px] h-[80vw] max-h-[800px] bg-[radial-gradient(circle,rgba(212,175,55,0.3)_0%,transparent_60%)] z-0"
-             />
-          </div>
-
-          <div className="container mx-auto px-4 relative z-10">
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.95, y: 40 }} whileInView={{ opacity: 1, scale: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 1, ease: "easeOut" }}
-              className="max-w-4xl mx-auto p-12 md:p-20 rounded-[3rem] text-center bg-white/20 backdrop-blur-2xl border border-white/30 shadow-[0_40px_100px_rgba(0,0,0,0.6)] relative overflow-hidden"
-            >
-              {/* Internal card glow */}
-              <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent z-0" />
+        {/* 5. CTA Section (Refined for extreme elegance and readability) */}
+        <section className="relative py-32 bg-white flex items-center justify-center">
+          <div className="container mx-auto px-4">
+            <div className="max-w-5xl mx-auto rounded-[3rem] overflow-hidden relative shadow-2xl">
+              {/* Card Background Image with strong dark overlay */}
+              <div className="absolute inset-0">
+                 <Image src="https://images.unsplash.com/photo-1522337660859-02fbefca4702?auto=format&fit=crop&q=80&w=2000" alt="Salon Atmosphere" fill className="object-cover" />
+                 <div className="absolute inset-0 bg-navy/90 mix-blend-multiply" />
+                 <div className="absolute inset-0 bg-gradient-to-br from-navy via-navy/95 to-navy/80" />
+              </div>
               
-              <div className="relative z-10">
-                <span className="text-gold-300 font-bold tracking-[0.2em] uppercase text-xs md:text-sm mb-6 block drop-shadow-md">Look & Feel Your Best</span>
-                <h2 className="text-5xl md:text-6xl lg:text-7xl font-cormorant font-bold text-white mb-8 tracking-tight drop-shadow-[0_4px_10px_rgba(0,0,0,0.8)]">
-                  Ready for Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold-300 to-gold-500 drop-shadow-sm">Next Look?</span>
+              <div className="relative z-10 p-12 md:p-24 text-center">
+                <span className="text-gold-500 font-bold tracking-[0.2em] uppercase text-xs md:text-sm mb-6 block">Look & Feel Your Best</span>
+                <h2 className="text-5xl md:text-6xl lg:text-7xl font-cormorant font-bold text-white mb-8 tracking-tight">
+                  Ready for Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold-300 to-gold-500">Next Look?</span>
                 </h2>
-                <p className="text-white text-lg md:text-xl mb-12 font-light max-w-2xl mx-auto leading-relaxed drop-shadow-md">
+                <p className="text-slate-300 text-lg md:text-xl mb-12 font-light max-w-2xl mx-auto leading-relaxed">
                   Step into our world of elegance. Book your appointment today and let our experts bring out your most beautiful you.
                 </p>
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-                  <Button onClick={openModal} size="lg" className="px-12 h-16 text-lg font-medium shadow-2xl hover:shadow-[0_20px_40px_rgba(212,175,55,0.4)] bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-400 hover:to-gold-500 text-navy w-full sm:w-auto border-none transition-all duration-300 hover:-translate-y-1">
+                  <Button onClick={openModal} size="lg" className="px-12 h-16 text-lg font-medium shadow-xl bg-gold-500 hover:bg-gold-600 text-navy w-full sm:w-auto border-none transition-all duration-300">
                     Book Appointment <ArrowRight className="ml-3" size={20} />
                   </Button>
-                  <Button variant="outline" size="lg" className="px-12 h-16 text-lg font-medium border-white/40 text-white hover:bg-white hover:text-navy w-full sm:w-auto transition-all duration-300 backdrop-blur-md hover:-translate-y-1">
+                  <Button variant="outline" size="lg" className="px-12 h-16 text-lg font-medium border-white/20 text-white hover:bg-white/10 w-full sm:w-auto transition-all duration-300">
                     <Phone className="mr-3" size={20} /> Call Now
                   </Button>
                 </div>
               </div>
-            </motion.div>
+            </div>
           </div>
         </section>
         

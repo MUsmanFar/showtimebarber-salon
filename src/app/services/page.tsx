@@ -95,8 +95,7 @@ export default function Services() {
         <div className="container mx-auto px-4 max-w-7xl py-24 space-y-32">
           {serviceCategories.map((category, catIdx) => (
             <section key={category.id} id={category.id}>
-              <motion.div 
-                initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
+              <div 
                 className="mb-12"
               >
                 <div className="flex items-center gap-4 mb-4">
@@ -106,13 +105,12 @@ export default function Services() {
                   <h2 className="text-4xl md:text-5xl font-cormorant font-bold text-navy tracking-tight">{category.name}</h2>
                 </div>
                 <p className="text-slate-500 font-light text-lg max-w-2xl">{category.description}</p>
-              </motion.div>
+              </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                 {category.items.map((svc, i) => (
-                  <motion.div 
+                  <div 
                     key={i} 
-                    initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-50px" }} transition={{ duration: 0.8, delay: i * 0.1 }} 
                     className="group flex flex-col rounded-[2rem] overflow-hidden bg-white shadow-sm hover:shadow-[0_20px_40px_rgba(37,99,235,0.08)] hover:-translate-y-2 transition-all duration-500 h-full relative border border-border-gray/50 hover:border-royal-blue/10"
                   >
                     {/* Image Area */}
@@ -135,7 +133,7 @@ export default function Services() {
 
                     {/* Animated Gradient Border */}
                     <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-navy via-royal-blue to-gold-500 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-700 ease-out" />
-                  </motion.div>
+                  </div>
                 ))}
               </div>
             </section>

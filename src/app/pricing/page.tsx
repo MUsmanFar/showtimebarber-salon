@@ -53,12 +53,8 @@ export default function Pricing() {
 
           <div className="space-y-16">
             {pricingCategories.map((cat, idx) => (
-              <motion.div 
+              <div 
                 key={idx}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: idx * 0.1 }}
                 className="glass p-8 md:p-12 rounded-[2rem] border border-border-gray bg-light-gray shadow-sm hover:shadow-lg transition-shadow duration-300"
               >
                 <h3 className="text-3xl font-cormorant font-bold text-navy mb-8 pb-4 border-b border-border-gray">{cat.category}</h3>
@@ -74,7 +70,7 @@ export default function Pricing() {
                     </div>
                   ))}
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
 
